@@ -3,10 +3,18 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics._ranking import _binary_clf_curve
 from sklearn.model_selection import StratifiedKFold
 import numpy as np
+import pandas as pd
 import copy
 import math
 
 
+def get_minority(y):
+    y = pd.Series(y)
+    value_counts = y.value_counts()
+    if len(value_counts) == 0:
+        raise Exception("Dataset can not be empty") 
+    else:
+        return value_counts.idxmin()
 
 def get_pr(y_true, y_probabilities,pos_label= None):
     precision, recall, _ = precision_recall_curve(y_true, y_probabilities,pos_label=pos_label)
@@ -60,7 +68,7 @@ def pr_davis(y_true, y_probabilities,return_pr=False, pos_label= None):
         If True, return precision and recall values, and AUC score.
     
     pos_label : int or str, default = None
-        The label of the positive class. When pos_label=None, if y_true is in {-1, 1} or {0, 1}, pos_label is set to 1, otherwise an error will be raised.
+        The label of the positive class. When pos_label=None, minority value is selected.
 
         
     Returns
@@ -70,8 +78,12 @@ def pr_davis(y_true, y_probabilities,return_pr=False, pos_label= None):
         If return_pr=True, returns the precision, recall and precision-recall AUC score.
 
     """
-
-    fps, tps, _ = _binary_clf_curve(y_true, y_probabilities[:,1],pos_label=pos_label,sample_weight=None)
+    if pos_label == None:
+        pos_label = get_minority(y_true)
+    try:
+        fps, tps, _ = _binary_clf_curve(y_true, y_probabilities[:,1],pos_label=pos_label,sample_weight=None)
+    except Exception as e:
+        fps, tps, _ = _binary_clf_curve(y_true, y_probabilities,pos_label=pos_label,sample_weight=None)
 
     #Interpolate new TPs and FPs when diff between successive TP is >1
     for i in range(len(tps)-1):
@@ -118,7 +130,7 @@ def pr_manning(y_true, y_probabilities,return_pr=False, pos_label= None):
     return_pr : bool, optional (default=False)
         Whether to return precision, recall, and AUC values.
     pos_label : int or str, default = None
-        The label of the positive class. When pos_label=None, if y_true is in {-1, 1} or {0, 1}, pos_label is set to 1, otherwise an error will be raised.
+        The label of the positive class. When pos_label=None, minority value is selected.
 
 
     Returns
@@ -128,9 +140,13 @@ def pr_manning(y_true, y_probabilities,return_pr=False, pos_label= None):
         If return_pr=True, returns the precision, recall and precision-recall AUC score.
     """
 
+    if pos_label == None:
+        pos_label = get_minority(y_true)
+    try:
+        precision, recall = get_pr(y_true, y_probabilities[:,1],pos_label=pos_label)
+    except Exception as e:
+        precision, recall = get_pr(y_true, y_probabilities,pos_label=pos_label)
 
-    precision, recall = get_pr(y_true, y_probabilities[:,1],pos_label=pos_label)
-    
     precision_manning = copy.deepcopy(precision)
     recall_manning = copy.deepcopy(recall)
     prInv = np.fliplr([precision_manning])[0]
@@ -167,13 +183,15 @@ def cross_validate_auc(clf, X, y, scoring, cv, pr = False, pos_label= None):
     pr : bool, optional (default=False)
         Whether to use precision and recall while calculating AUC values.
     pos_label : int or str, default = None
-        The label of the positive class. When pos_label=None, if y_true is in {-1, 1} or {0, 1}, pos_label is set to 1, otherwise an error will be raised.
+        The label of the positive class. When pos_label=None, minority value is selected.
 
     Returns
     -------
     float 
         Cross-validated Area Under the Curve (AUC) score.
     """
+    
+
     cv = StratifiedKFold(n_splits=cv)
     y_probabilities = []
     y_true = []
@@ -189,6 +207,10 @@ def cross_validate_auc(clf, X, y, scoring, cv, pr = False, pos_label= None):
 
     y_true = np.concatenate(y_true)
     y_probabilities = np.concatenate(y_probabilities)
+
+    if pos_label == None:
+        pos_label = get_minority(y_true)
+        
     if pr:
         precision, recall = get_pr(y_true, y_probabilities,pos_label=pos_label)  
         return scoring(recall,precision)
