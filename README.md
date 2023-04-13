@@ -19,7 +19,7 @@ The "ImbalanceMetrics" Python package provides an extensive set of evaluation me
 pip install imbalanced-metrics
 
 ## install developer version
-pip install git+https://github.com/paobranco/ImablanceMetrics.git
+pip install git+https://github.com/paobranco/ImabalanceMetrics.git
 ```
 
 ## Usage (Classification)
@@ -73,22 +73,22 @@ ImablanceMetrics is open for improvements and maintenance. Your help is valued t
 
 ## License
 
-© Sadid Rafsun Tulon, 2023. Licensed under the General Public License v3.0 (GPLv3).
+© Licensed under the General Public License v3.0 (GPLv3).
 
 ## Reference
 
-Ribeiro, R.P.: Utility-based regression. Ph.D. thesis, Dep. Computer Science, Faculty of Sciences - University of Porto (2011)
-Branco, P., Ribeiro, R.P., Torgo, L.: UBL: an R package for utility-based learning (2016), https://arxiv.org/abs/1604.08079
-Branco, P., Torgo, L., Ribeiro, R.: A survey of predictive modelling under imbalanced distributions (2015)
-Branco, P., Torgo, L., Ribeiro, R.P.: A survey of predictive modeling on imbalanced domains. ACM Computing Surveys (CSUR) 49(2), 1–50 (2016)
-Branco, P., Torgo, L., Ribeiro, R.P.: SMOGN: a pre-processing approach for imbalanced regression. In: First international workshop on learning with imbalanced domains: Theory and applications. pp. 36–50. PMLR (2017)
-Cordón, I., García, S., Fernández, A., Herrera, F.: Imbalance: Oversampling algorithms for imbalanced classification in r. Knowledge-Based Systems 161, 329–341 (2018), https://doi.org/10.1016/j.knosys.2018.07.035
-Davis, J., Goadrich, M.: The relationship between precision-recall and roc curves. vol. 06 (06 2006). https://doi.org/10.1145/1143844.1143874
-Derrac, J., Garcia, S., Sanchez, L., Herrera, F.: Keel data-mining software tool: Data set repository, integration of algorithms and experimental analysis framework. J. Mult. Valued Logic Soft Comput 17 (2015)
-Gaudreault, J.G., Branco, P., Gama, J.: An analysis of performance metrics for imbalanced classification. In: Discovery Science: 24th International Conference, DS 2021, Halifax, NS, Canada, October 11–13, 2021, Proceedings. pp. 67–77 (2021)
-Kubat, M., Matwin, S., et al.: Addressing the curse of imbalanced training sets: one-sided selection. In: Icml. vol. 97, p. 179. Citeseer (1997)
-Kunz, N.: SMOGN: Synthetic minority over-sampling technique for regression with gaussian noise (2020), https://pypi.org/project/smogn
-Lemaître, G., Nogueira, F., Aridas, C.K.: Imbalanced-learn: A python toolbox to tackle the curse of imbalanced datasets in machine learning. JMLR 18(17), 1–5 (2017),  http://jmlr.org/papers/v18/16-365.html
-Ribeiro, R.: Utility-based Regression. Ph.D. thesis, Dep. Computer Science, Faculty of Sciences - University of Porto (2011)
-Ribeiro, R., Moniz, N.: Imbalanced regression and extreme value prediction. Machine Learning 109,1–33 (09 2020). https://doi.org/10.1007/s10994-020-05900-9
-berreergun: Ironpy. https://github.com/berreergun/IRonPy (2021)
+- Ribeiro, R.P.: Utility-based regression. Ph.D. thesis, Dep. Computer Science, Faculty of Sciences - University of Porto (2011)
+- Branco, P., Ribeiro, R.P., Torgo, L.: UBL: an R package for utility-based learning (2016), https://arxiv.org/abs/1604.08079
+- Branco, P., Torgo, L., Ribeiro, R.: A survey of predictive modelling under imbalanced distributions (2015)
+- Branco, P., Torgo, L., Ribeiro, R.P.: A survey of predictive modeling on imbalanced domains. ACM Computing Surveys (CSUR) 49(2), 1–50 (2016)
+- Branco, P., Torgo, L., Ribeiro, R.P.: SMOGN: a pre-processing approach for imbalanced regression. In: First international workshop on learning with imbalanced domains: Theory and applications. pp. 36–50. PMLR (2017)
+- Cordón, I., García, S., Fernández, A., Herrera, F.: Imbalance: Oversampling algorithms for imbalanced classification in r. Knowledge-Based Systems 161, 329–341 (2018), https://doi.org/10.1016/j.knosys.2018.07.035
+- Davis, J., Goadrich, M.: The relationship between precision-recall and roc curves. vol. 06 (06 2006). https://doi.org/10.1145/1143844.1143874
+- Derrac, J., Garcia, S., Sanchez, L., Herrera, F.: Keel data-mining software tool: Data set repository, integration of algorithms and experimental analysis framework. J. Mult. Valued Logic Soft Comput 17 (2015)
+- Gaudreault, J.G., Branco, P., Gama, J.: An analysis of performance metrics for imbalanced classification. In: Discovery Science: 24th International Conference, DS 2021, Halifax, NS, Canada, October 11–13, 2021, Proceedings. pp. 67–77 (2021)
+- Kubat, M., Matwin, S., et al.: Addressing the curse of imbalanced training sets: one-sided selection. In: Icml. vol. 97, p. 179. Citeseer (1997)
+- Kunz, N.: SMOGN: Synthetic minority over-sampling technique for regression with gaussian noise (2020), https://pypi.org/project/smogn
+- Lemaître, G., Nogueira, F., Aridas, C.K.: Imbalanced-learn: A python toolbox to tackle the curse of imbalanced datasets in machine learning. JMLR 18(17), 1–5 (2017),  http://jmlr.org/papers/v18/16-365.html
+- Ribeiro, R.: Utility-based Regression. Ph.D. thesis, Dep. Computer Science, Faculty of Sciences - University of Porto (2011)
+- Ribeiro, R., Moniz, N.: Imbalanced regression and extreme value prediction. Machine Learning 109,1–33 (09 2020). https://doi.org/10.1007/s10994-020-05900-9
+- berreergun: Ironpy. https://github.com/berreergun/IRonPy (2021)
