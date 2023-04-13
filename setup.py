@@ -6,7 +6,7 @@ setup(
       description='Perfromance metrics for imbalanced classification and imbalanced regression tasks',
       long_description = open('README.md').read(),
       long_description_content_type = "text/markdown",
-      url='https://github.com/paobranco/ImablanceMetrics',
+      url='https://github.com/paobranco/ImabalanceMetrics',
       author='Sadid Rafsun Tulon, Jean-Gabriel Gaudreault, Paula Branco',
       author_email = 'stulo080@uottawa.ca, j.gaudreault@uottawa.ca, pbranco@uottawa.ca',
       classifiers = [
