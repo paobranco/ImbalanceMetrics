@@ -19,7 +19,7 @@ The "ImbalanceMetrics" Python package provides an extensive set of evaluation me
 pip install imbalanced-metrics
 
 ## install developer version
-pip install git+https://github.com/paobranco/ImabalanceMetrics.git
+pip install git+https://github.com/paobranco/ImbalanceMetrics.git
 ```
 
 ## Usage (Classification)
