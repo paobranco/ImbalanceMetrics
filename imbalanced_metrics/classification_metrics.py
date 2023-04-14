@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import copy
 import math
+import warnings
 
 
 def get_minority(y):
@@ -14,13 +15,15 @@ def get_minority(y):
     if len(value_counts) == 0:
         raise Exception("Dataset can not be empty") 
     else:
-        return value_counts.idxmin()
+        minor = value_counts.idxmin()
+        #print("Using minority class "+str(minor)+" as positive class")
+        return minor
 
 def get_pr(y_true, y_probabilities,pos_label= None):
     precision, recall, _ = precision_recall_curve(y_true, y_probabilities,pos_label=pos_label)
     return precision, recall
 
-def gmean_score(y_true, y_pred , pos_label= 0):
+def gmean_score(y_true, y_pred):
     """
     Calculates geometric mean score.
 
@@ -31,8 +34,6 @@ def gmean_score(y_true, y_pred , pos_label= 0):
 
     y_pred : array-like
         Predicted target values.
-    pos_label : int, default = 0
-        The label of the positive class. Either 0 or 1.
 
     Returns
     -------
@@ -40,17 +41,23 @@ def gmean_score(y_true, y_pred , pos_label= 0):
         The geometric mean score.
 
     """
-    if pos_label!=0 and pos_label!=1:
-        raise Exception("pos_label is either 0 or 1") 
-    matrix = confusion_matrix(y_true, y_pred,labels=[pos_label,abs(1-pos_label)])
-    TN = matrix[0][0]
-    FN = matrix[1][0]
-    TP = matrix[1][1]
-    FP = matrix[0][1]
+    num_classes = len(np.unique(y_true))
 
-    return math.sqrt((TP/(TP+FN))*(TN/(TN+FP)))
+    matrix = confusion_matrix(y_true, y_pred)
 
+    recalls = []
+    for i in range(num_classes):
+        TP = matrix[i, i]
+        FN = np.sum(matrix[i, :]) - TP
+        recall = TP / (TP + FN)
+        recalls.append(recall)
 
+    recalls_product = 1
+    for r in recalls:
+        recalls_product *= r
+
+    gmean = math.pow(recalls_product, 1 / num_classes)
+    return gmean
 
 def pr_davis(y_true, y_probabilities,return_pr=False, pos_label= None):
     """
@@ -68,7 +75,7 @@ def pr_davis(y_true, y_probabilities,return_pr=False, pos_label= None):
         If True, return precision and recall values, and AUC score.
     
     pos_label : int or str, default = None
-        The label of the positive class. When pos_label=None, minority value is selected.
+        The label of the positive class. When pos_label = None, minority value is selected.
 
         
     Returns
@@ -80,10 +87,21 @@ def pr_davis(y_true, y_probabilities,return_pr=False, pos_label= None):
     """
     if pos_label == None:
         pos_label = get_minority(y_true)
+
+    labels = np.unique(y_true)
     try:
-        fps, tps, _ = _binary_clf_curve(y_true, y_probabilities[:,1],pos_label=pos_label,sample_weight=None)
-    except Exception as e:
+        index  = np.where(labels == pos_label)[0][0]
+    except IndexError:
+        warnings.warn("Positive label not found. Using minority class as positive")
+        pos_label = get_minority(y_true)
+        index  = np.where(labels == pos_label)[0][0]
+
+    try:
+        fps, tps, _ = _binary_clf_curve(y_true, y_probabilities[:,index],pos_label=pos_label,sample_weight=None)
+    except IndexError:
         fps, tps, _ = _binary_clf_curve(y_true, y_probabilities,pos_label=pos_label,sample_weight=None)
+    
+
 
     #Interpolate new TPs and FPs when diff between successive TP is >1
     for i in range(len(tps)-1):
@@ -142,9 +160,18 @@ def pr_manning(y_true, y_probabilities,return_pr=False, pos_label= None):
 
     if pos_label == None:
         pos_label = get_minority(y_true)
+
+    labels = np.unique(y_true)
     try:
-        precision, recall = get_pr(y_true, y_probabilities[:,1],pos_label=pos_label)
-    except Exception as e:
+        index  = np.where(labels == pos_label)[0][0]
+    except IndexError:
+        warnings.warn("Positive label not found. Using minority class as positive")
+        pos_label = get_minority(y_true)
+        index  = np.where(labels == pos_label)[0][0]
+
+    try:
+        precision, recall = get_pr(y_true, y_probabilities[:,index],pos_label=pos_label)
+    except IndexError:
         precision, recall = get_pr(y_true, y_probabilities,pos_label=pos_label)
 
     precision_manning = copy.deepcopy(precision)
@@ -210,9 +237,17 @@ def cross_validate_auc(clf, X, y, scoring, cv, pr = False, pos_label= None):
 
     if pos_label == None:
         pos_label = get_minority(y_true)
+    
+    labels = np.unique(y_true)
+    try:
+        index  = np.where(labels == pos_label)[0][0]
+    except IndexError:
+        warnings.warn("Positive label not found. Using minority class as positive")
+        pos_label = get_minority(y_true)
+        index  = np.where(labels == pos_label)[0][0]
         
     if pr:
-        precision, recall = get_pr(y_true, y_probabilities,pos_label=pos_label)  
+        precision, recall = get_pr(y_true, y_probabilities[:,index],pos_label=pos_label)  
         return scoring(recall,precision)
     else:
-        return scoring(y_true,y_probabilities)
+        return scoring(y_true,y_probabilities,pos_label=pos_label) 
