@@ -73,7 +73,7 @@ ImablanceMetrics is open for improvements and maintenance. Your help is valued t
 
 ## License
 
-© Licensed under the General Public License v3.0 (GPLv3).
+Licensed under the General Public License v3.0 (GPLv3).
 
 ## Reference
 

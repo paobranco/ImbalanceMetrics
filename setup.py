@@ -2,11 +2,11 @@ from setuptools import setup
 
 setup(
       name='imbalanced_metrics',
-      version='0.0.1',
+      version='0.0.3',
       description='Perfromance metrics for imbalanced classification and imbalanced regression tasks',
       long_description = open('README.md').read(),
       long_description_content_type = "text/markdown",
-      url='https://github.com/paobranco/ImabalanceMetrics',
+      url='https://github.com/paobranco/ImbalanceMetrics',
       author='Sadid Rafsun Tulon, Jean-Gabriel Gaudreault, Paula Branco',
       author_email = 'stulo080@uottawa.ca, j.gaudreault@uottawa.ca, pbranco@uottawa.ca',
       classifiers = [
