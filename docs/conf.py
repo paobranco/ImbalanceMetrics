@@ -9,7 +9,7 @@
 project = 'imbalanced_metrics'
 author = 'Sadid Rafsun Tulon'
 copyright = '2023'
-release = '0.0.4'
+release = '0.0.5'
 master_doc = 'index'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

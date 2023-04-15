@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
       name='imbalance_metrics',
-      version='0.0.4',
+      version='0.0.5',
       description='Perfromance metrics for imbalanced classification and imbalanced regression tasks',
       long_description = open('README.md').read(),
       long_description_content_type = "text/markdown",
