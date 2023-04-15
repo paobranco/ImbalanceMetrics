@@ -89,7 +89,7 @@ def gmean_score(y_true, y_pred, weighted = True):
         recall = TP / (TP + FN)
         if weighted:
             phi = calculate_classification_phi(y_true, return_phi = True)
-            recall = recall * phi[classes(i)]
+            recall = recall * phi[classes[i]]
         recalls.append(recall)
 
     recalls_product = 1
