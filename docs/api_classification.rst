@@ -1,5 +1,10 @@
 API - classification_metrics
 
+``calculate_classification_phi``
+-------------
+
+.. autofunction:: imbalance_metrics.classification_metrics.calculate_classification_phi
+
 
 ``gmean_score``
 -------------
