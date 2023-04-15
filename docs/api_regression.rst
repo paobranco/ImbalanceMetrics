@@ -4,42 +4,42 @@ API - regression_metrics
 ``calculate_phi``
 -------------
 
-.. autofunction:: imbalanced_metrics.regression_metrics.calculate_phi
+.. autofunction:: imbalance_metrics.regression_metrics.calculate_phi
 
 
 ``phi_weighted_r2``
 -------------
 
-.. autofunction:: imbalanced_metrics.regression_metrics.phi_weighted_r2
+.. autofunction:: imbalance_metrics.regression_metrics.phi_weighted_r2
 
 ``phi_weighted_mse``
 -------------
 
-.. autofunction:: imbalanced_metrics.regression_metrics.phi_weighted_mse
+.. autofunction:: imbalance_metrics.regression_metrics.phi_weighted_mse
 
     
 ``phi_weighted_mae``
 -------------
 
-.. autofunction:: imbalanced_metrics.regression_metrics.phi_weighted_mae
+.. autofunction:: imbalance_metrics.regression_metrics.phi_weighted_mae
 
 
 ``phi_weighted_root_mse``
 -------------
 
-.. autofunction:: imbalanced_metrics.regression_metrics.phi_weighted_mse
+.. autofunction:: imbalance_metrics.regression_metrics.phi_weighted_mse
 
 
 
 ``ser_t``
 -------------
 
-.. autofunction:: imbalanced_metrics.regression_metrics.ser_t 
+.. autofunction:: imbalance_metrics.regression_metrics.ser_t 
 
 ``sera``
 -------------
 
-.. autofunction:: imbalanced_metrics.regression_metrics.sera 
+.. autofunction:: imbalance_metrics.regression_metrics.sera 
 
 
 

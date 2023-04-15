@@ -1,4 +1,4 @@
-imbalanced-metrics
+imbalance-metrics
 scikit-learn
 numpy
 smogn
