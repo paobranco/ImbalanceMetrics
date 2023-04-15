@@ -23,7 +23,41 @@ def get_pr(y_true, y_probabilities,pos_label= None):
     precision, recall, _ = precision_recall_curve(y_true, y_probabilities,pos_label=pos_label)
     return precision, recall
 
-def gmean_score(y_true, y_pred):
+def calculate_classification_phi(y_true,per_sample = False, return_phi = False):
+    """
+    Calculates the Phi relvance value for each class of 'y'.
+
+    Parameters
+    ----------
+    y_true : array-like
+        Input data for which phi value needs to be calculated.
+
+    per_sample : bool, default = False
+        If False, Using inverse of the classes prevalence to weight each class 
+        If True, using inverse of the classes prevalence to weight each sample 
+
+    return_phi : bool, default = False
+        Whether to return the Phi relevance value of each class.
+    Returns
+    -------
+    y_phi : array-like
+        If return_phi = False, Phi values for each element of 'y_true'.
+        If return_phi = True, Phi values for each class of 'y_true'.
+    """
+    sum_inverse = y_true.value_counts().apply(lambda x: 1 / x).sum()
+    phi = y_true.value_counts().apply(lambda x: (1 / x) / sum_inverse)
+    if return_phi:
+        return phi
+    else:
+        y_phi = y_true.map(phi)
+        if not per_sample:
+            return y_phi
+        else: 
+            y_count = y_true.map(y_true.value_counts())
+            new_y_phi= y_phi/y_count
+            return new_y_phi
+
+def gmean_score(y_true, y_pred, weighted = True):
     """
     Calculates geometric mean score.
 
@@ -35,28 +69,34 @@ def gmean_score(y_true, y_pred):
     y_pred : array-like
         Predicted target values.
 
+    weighted : bool, default = True
+        Whether to use Phi relevance value for calculation. 
+
     Returns
     -------
     float
         The geometric mean score.
 
     """
-    num_classes = len(np.unique(y_true))
+    classes = np.unique(y_true)
 
     matrix = confusion_matrix(y_true, y_pred)
 
     recalls = []
-    for i in range(num_classes):
+    for i in range(len(classes)):
         TP = matrix[i, i]
         FN = np.sum(matrix[i, :]) - TP
         recall = TP / (TP + FN)
+        if weighted:
+            phi = calculate_classification_phi(y_true, return_phi = True)
+            recall = recall * phi[classes(i)]
         recalls.append(recall)
 
     recalls_product = 1
     for r in recalls:
         recalls_product *= r
 
-    gmean = math.pow(recalls_product, 1 / num_classes)
+    gmean = math.pow(recalls_product, 1 / len(classes))
     return gmean
 
 def pr_davis(y_true, y_probabilities,return_pr=False, pos_label= None):
