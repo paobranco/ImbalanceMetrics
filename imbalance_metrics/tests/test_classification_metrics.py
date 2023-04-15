@@ -1,5 +1,5 @@
 import unittest
-from imbalanced_metrics import classification_metrics as cm
+from imbalance_metrics import classification_metrics as cm
 import get_y
 import numpy as np
 

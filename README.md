@@ -16,7 +16,7 @@ The "ImbalanceMetrics" Python package provides an extensive set of evaluation me
 ## Installation
 ```python
 ## install pypi release
-pip install imbalanced-metrics
+pip install imbalance-metrics
 
 ## install developer version
 pip install git+https://github.com/paobranco/ImbalanceMetrics.git
@@ -27,7 +27,7 @@ pip install git+https://github.com/paobranco/ImbalanceMetrics.git
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
-from imbalanced_metrics import classification_metrics as cm
+from imbalance_metrics import classification_metrics as cm
 df = pd.read_csv('poker-9_vs_7(processed).csv', header=None)
 X,y=df.drop(columns=[10]),df[10]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
@@ -48,7 +48,7 @@ import pandas as pd
 from sklearn.svm import SVR
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from imbalanced_metrics import regression_metrics as rm
+from imbalance_metrics import regression_metrics as rm
 df = pd.read_csv('housing(processed).csv')
 X,y=df.drop(columns="SalePrice"),df["SalePrice"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)

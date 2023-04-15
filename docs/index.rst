@@ -1,9 +1,9 @@
-.. imbalanced_metrics documentation master file, created by
+.. imbalance_metrics documentation master file, created by
    sphinx-quickstart on Mon Feb  6 21:50:15 2023.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to imbalanced_metrics's documentation!
+Welcome to imbalance_metrics's documentation!
 ==============================================
 
 .. toctree::
@@ -25,7 +25,7 @@ Installation
 
 .. code-block:: bash
 
-   pip install imbalanced-metrics
+   pip install imbalance-metrics
 
 Usage Classification 
 -----
@@ -35,7 +35,7 @@ Usage Classification
    import pandas as pd
    from sklearn.ensemble import RandomForestClassifier
    from sklearn.model_selection import train_test_split
-   from imbalanced_metrics import classification_metrics as cm
+   from imbalance_metrics import classification_metrics as cm
    df = pd.read_csv('glass0.csv', header=None)
    X,y=df.drop(columns=[9]),df[9]
    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.40)
@@ -61,7 +61,7 @@ Usage Regression
    from sklearn.svm import SVR
    from sklearn.model_selection import train_test_split
    from sklearn.preprocessing import StandardScaler
-   from imbalanced_metrics import regression_metrics as rm
+   from imbalance_metrics import regression_metrics as rm
    df = pd.read_csv('housing(processed).csv')
    X,y=df.drop(columns="SalePrice"),df["SalePrice"]
    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)

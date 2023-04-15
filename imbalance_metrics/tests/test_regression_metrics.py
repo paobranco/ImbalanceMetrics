@@ -1,5 +1,5 @@
 import unittest
-from imbalanced_metrics import regression_metrics as rm
+from imbalance_metrics import regression_metrics as rm
 import get_y
 
 class TestRM(unittest.TestCase):
