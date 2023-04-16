@@ -23,7 +23,7 @@ def get_pr(y_true, y_probabilities,pos_label= None):
     precision, recall, _ = precision_recall_curve(y_true, y_probabilities,pos_label=pos_label)
     return precision, recall
 
-def calculate_classification_phi(y_true,per_sample = False, return_phi = False):
+def calculate_classification_phi(y_true,phi_option = 1, return_phi_per_class = False):
     """
     Calculates the Phi relvance value for each class of 'y'.
 
@@ -32,30 +32,32 @@ def calculate_classification_phi(y_true,per_sample = False, return_phi = False):
     y_true : array-like
         Input data for which phi value needs to be calculated.
 
-    per_sample : bool, default = False
-        If False, Using inverse of the classes prevalence to weight each class 
-        If True, using inverse of the classes prevalence to weight each sample 
+    phi_option : int, default = 1
+        If 1, Classes weighted by inverse frequency 
+        If 2, Same as Option 1 but divided by class frequency 
 
-    return_phi : bool, default = False
-        Whether to return the Phi relevance value of each class.
+    return_phi_per_class : bool, default = False
+        Whether to return the Phi relevance value of each class or each sample
     Returns
     -------
     y_phi : array-like
-        If return_phi = False, Phi values for each element of 'y_true'.
-        If return_phi = True, Phi values for each class of 'y_true'.
+        If return_phi_per_class = False, Phi values for each element of 'y_true'.
+        If return_phi_per_class = True, Phi values for each class of 'y_true'.
     """
     sum_inverse = y_true.value_counts().apply(lambda x: 1 / x).sum()
     phi = y_true.value_counts().apply(lambda x: (1 / x) / sum_inverse)
-    if return_phi:
+    if return_phi_per_class:
         return phi
     else:
         y_phi = y_true.map(phi)
-        if not per_sample:
+        if phi_option == 1:
             return y_phi
-        else: 
+        elif phi_option == 2: 
             y_count = y_true.map(y_true.value_counts())
             new_y_phi= y_phi/y_count
             return new_y_phi
+        else: 
+            raise Exception()
 
 def gmean_score(y_true, y_pred, weighted = True):
     """
@@ -88,7 +90,7 @@ def gmean_score(y_true, y_pred, weighted = True):
         FN = np.sum(matrix[i, :]) - TP
         recall = TP / (TP + FN)
         if weighted:
-            phi = calculate_classification_phi(y_true, return_phi = True)
+            phi = calculate_classification_phi(y_true, return_phi_per_class = True)
             recall = recall * phi[classes[i]]
         recalls.append(recall)
 
