@@ -25,21 +25,24 @@ pip install git+https://github.com/paobranco/ImbalanceMetrics.git
 ## Usage (Classification)
 ```python
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from imbalance_metrics import classification_metrics as cm
-df = pd.read_csv('poker-9_vs_7(processed).csv', header=None)
-X,y=df.drop(columns=[10]),df[10]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
-clf = DecisionTreeClassifier(max_depth=100)
+df = pd.read_csv('glass0.csv', header=None)
+X,y=df.drop(columns=[9]),df[9]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.40)
+clf = RandomForestClassifier(random_state=42)
 clf.fit(X_train,y_train)
 y_pred=clf.predict(X_test)
 y_proba=clf.predict_proba(X_test)
-gmean = cm.gmean_score(y_test, y_pred)
-p_dav,r_dav,pra_dav=cm.pr_davis(y_test,y_proba,True) # By default 1 as positive
-p_dav,r_dav,pra_dav=cm.pr_davis(y_test,y_proba,True,pos_label=0) # 0 as positive
-p_man,r_man,pra_man=cm.pr_manning(y_test,y_proba,True)
-cv_davis=cm.cross_validate_auc(clf,X,y,cm.pr_davis,6)
+y_phi = cm.calculate_classification_phi(y_test) # Relevance by class frequency
+gmean = cm.gmean_score(y_test, y_pred) # Weighted gmean 
+p_d0,r_d0,pra_d0=cm.pr_davis(y_test,y_proba,True) # Default minority as positive
+p_d1,r_d1,pra_d1=cm.pr_davis(y_test,y_proba,True,pos_label=1) # 1 as positive
+p_m0,r_m0,pra_m0=cm.pr_manning(y_test,y_proba,True) # Default minority as positive
+p_m1,r_m1,pra_m1=cm.pr_manning(y_test,y_proba,True,pos_label=1) # 1 as positive 
+cv_davis=cm.cross_validate_auc(clf,X,y,cm.pr_davis,5)
+cv_manning=cm.cross_validate_auc(clf,X,y,cm.pr_manning,5)
 ```
 
 ## Usage (Regression)

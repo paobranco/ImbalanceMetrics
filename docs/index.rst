@@ -43,7 +43,8 @@ Usage Classification
    clf.fit(X_train,y_train)
    y_pred=clf.predict(X_test)
    y_proba=clf.predict_proba(X_test)
-   gmean = cm.gmean_score(y_test, y_pred)
+   y_phi = cm.calculate_classification_phi(y_test) # Relevance by class frequency
+   gmean = cm.gmean_score(y_test, y_pred) # Weighted gmean 
    p_d0,r_d0,pra_d0=cm.pr_davis(y_test,y_proba,True) # Default minority as positive
    p_d1,r_d1,pra_d1=cm.pr_davis(y_test,y_proba,True,pos_label=1) # 1 as positive
    p_m0,r_m0,pra_m0=cm.pr_manning(y_test,y_proba,True) # Default minority as positive
