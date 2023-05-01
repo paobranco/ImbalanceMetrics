@@ -195,7 +195,7 @@ def pr_manning(y_true, y_probabilities,return_pr=False, pos_label= None):
 
     Returns
     -------
-    float or tuple of arrays and float
+    float or tuple 
         If return_pr=False, returns the precision-recall AUC score.
         If return_pr=True, returns the precision, recall and precision-recall AUC score.
     """
