@@ -207,7 +207,7 @@ def ser_t(y, y_pred, t, method = "auto", xtrm_type = "both", coef = 1.5,  ctrl_p
         
     Returns
     -------
-    ser_t : float or list
+    ser_t : list
         List of Squared error-relevance values at each threshold t.
     """
     tbl,ms= ser_process(y, y_pred, method, xtrm_type , coef , ctrl_pts)
