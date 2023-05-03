@@ -24,7 +24,7 @@ class TestRM(unittest.TestCase):
         self.assertEqual(rm.phi_weighted_root_mse(self.y,self.y_pred), 1.2284897091877132)
 
     def test_ser_t(self):
-        self.assertEqual(rm.phi_weighted_root_mse(self.y,self.y_pred), 1.2284897091877132)
+        self.assertEqual(rm.ser_t(self.y,self.y_pred, t=.7), 123.02246460749527)
 
     def test_sera(self):
         self.assertEqual(rm.sera(self.y,self.y_pred), 128.2178637371627)
